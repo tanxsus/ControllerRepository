@@ -5,10 +5,16 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.HashMap;
+import java.util.Set;
 
 
 public class DettaglioLista extends ActionBarActivity {
+
+    private ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,9 +24,26 @@ public class DettaglioLista extends ActionBarActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra(DisplayMessageActivity.LINEA);
 
-        TextView textView = (TextView) findViewById(R.id.text);
+        HashMap<String, HashMap> mappa = DisplayMessageActivity.mappa;
 
-        textView.setText(message);
+        int count = 0;
+
+        HashMap m = (HashMap) mappa.get(message);
+
+        String[] lista = new String[m.size()];
+
+        Set set = m.keySet();
+
+        for (Object obj : set) {
+
+            lista[count] = obj.toString() + " " + m.get(obj).toString();
+            count++;
+        }
+
+
+        lv = (ListView) findViewById(R.id.listDettaglio);
+        lv.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, R.id.item, lista));
+
 
     }
 

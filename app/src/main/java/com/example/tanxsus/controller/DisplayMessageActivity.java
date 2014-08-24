@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.xmlrpc.android.XMLRPCClient;
 
@@ -27,6 +26,7 @@ import java.util.List;
 public class DisplayMessageActivity extends ActionBarActivity {
 
     public final static String LINEA = "";
+    public static HashMap<String, HashMap> mappa = new HashMap<String, HashMap>();
     private XMLRPCClient client;
     private ListView lv;
 
@@ -71,10 +71,15 @@ public class DisplayMessageActivity extends ActionBarActivity {
 
         int count = 0;
 
+
         for (HashMap s : arrivi) {
             actionBar.setSubtitle((String) s.get("nome_palina"));
 
-            lista[count] = s.get("linea") + " " + s.get("annuncio");
+            String chiave = s.get("linea") + " " + s.get("annuncio");
+
+            lista[count] = chiave;
+
+            mappa.put(chiave, s);
 
             count++;
         }
@@ -87,19 +92,13 @@ public class DisplayMessageActivity extends ActionBarActivity {
 
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                // When clicked, show a toast with the TextView text Game, Help, Home
-
-                // int i=lv.getSelectedItem();
 
                 Object s = lv.getItemAtPosition(position);
 
-                Toast.makeText(getApplicationContext(), s.toString(),
-                        Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(DisplayMessageActivity.this, DettaglioLista.class);
                 intent.putExtra(LINEA, s.toString());
-                startActivity(intent);
 
+                startActivity(intent);
 
             }
 
