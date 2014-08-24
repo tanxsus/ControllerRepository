@@ -1,0 +1,15 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <item name="android:actionBarTabTextStyle">@style/Widget.MyTabText</item>
+
+
+    </style>
+
+    <style name="Widget.MyTabText" parent="android:Widget.Holo.Light.ActionBar.TabText.Inverse">
+        <item name="android:textSize">24px</item>
+    </style>
+
+</resources>
