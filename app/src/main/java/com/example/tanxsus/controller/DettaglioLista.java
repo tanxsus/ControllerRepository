@@ -46,7 +46,6 @@ public class DettaglioLista extends ActionBarActivity {
 
 
     }
-    
 
 
     @Override
