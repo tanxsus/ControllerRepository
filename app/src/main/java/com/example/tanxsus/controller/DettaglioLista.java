@@ -1,8 +1,10 @@
 package com.example.tanxsus.controller;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -15,6 +17,8 @@ import java.util.Set;
 public class DettaglioLista extends ActionBarActivity {
 
     private ListView lv;
+
+    private String id_palina;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,11 @@ public class DettaglioLista extends ActionBarActivity {
 
             lista[count] = obj.toString() + " " + m.get(obj).toString();
             count++;
+
+            if (obj.toString().equals("id_palina")) {
+                id_palina = m.get(obj).toString();
+            }
+
         }
 
 
@@ -66,4 +75,62 @@ public class DettaglioLista extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            Intent intent = new Intent(this, DisplayMessageActivity.class);
+
+            Progress mytask = new Progress(intent);
+            mytask.execute();
+
+
+            intent.putExtra(MyActivity.EXTRA_MESSAGE, id_palina);
+            startActivity(intent);
+
+        }
+        return true;
+    }
+
+    private class Progress extends AsyncTask<String, Void, String> {
+
+        android.app.ProgressDialog progressDialog = new android.app.ProgressDialog(DettaglioLista.this);
+
+        private Intent intent;// = new Intent(MyActivity.this, DisplayMessageActivity.class);
+
+        Progress(Intent intent) {
+            this.intent = intent;
+        }
+
+        protected void onPreExecute() {
+
+            progressDialog.setTitle("Processing...");
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(true);
+            progressDialog.setIndeterminate(true);
+            progressDialog.show();
+        }
+
+        protected String doInBackground(String... params) {
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String result) {
+
+            progressDialog.dismiss();
+            //Intent n = new Intent(MyActivity.this, DisplayMessageActivity.class);
+            //startActivity(intent);
+            finish();
+        }
+
+
+    }
+
+
 }

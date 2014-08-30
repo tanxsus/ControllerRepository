@@ -127,6 +127,7 @@ public class MyActivity extends Activity {
         protected void onPostExecute(String result) {
 
             progressDialog.dismiss();
+            finish();
             //Intent n = new Intent(MyActivity.this, DisplayMessageActivity.class);
             //startActivity(intent);
         }

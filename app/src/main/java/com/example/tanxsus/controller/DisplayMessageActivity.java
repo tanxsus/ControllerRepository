@@ -60,6 +60,7 @@ public class DisplayMessageActivity extends ActionBarActivity {
 
                     Intent intent = new Intent(DisplayMessageActivity.this, MyActivity.class);
                     startActivity(intent);
+                    finish();
 
                 }
             });
@@ -99,6 +100,7 @@ public class DisplayMessageActivity extends ActionBarActivity {
                 intent.putExtra(LINEA, s.toString());
 
                 startActivity(intent);
+                finish();
 
             }
 
